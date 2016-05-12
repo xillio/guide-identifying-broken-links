@@ -1,0 +1,25 @@
+/**
+ * This robot provides a function that will extract links from a web page at
+ * a given url.
+ *
+ * This is part of the 'Identifying Broken Links' guide on http://xill.io
+ *
+ * @author Thomas Biesaart
+ *
+ */
+use Web, Collection, System;
+
+function getLinks(url) {
+    // Fetch the page
+    System.print("Getting links from " :: url);
+    var page = Web.loadPage(url, {"loadimages": false});
+    
+    // Get all a tags
+    return filter<isNotNull>(
+        Web.xPath(page, "//a/@href")
+    );
+}
+
+private function isNotNull(url) {
+    return url != null;
+}

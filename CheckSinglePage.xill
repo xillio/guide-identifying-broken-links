@@ -1,0 +1,35 @@
+/**
+ * This robot will use the functions from this project to find broken links
+ * on a single page.
+ *
+ * This is part of the 'Identifying Broken Links' guide on http://xill.io
+ *
+ * @author Thomas Biesaart
+ *
+ */
+use System, XURL;
+include GetLinks;
+include CheckLink;
+
+var webPage = "http://support.xillio.com";
+singlePage(webPage);
+
+function singlePage(page) {
+    var checkCount = 0;
+    var errorCount = 0;
+    foreach(link in getLinks(page)) {
+        if(!checkLink(link)) {
+            System.print("Found broken link: " :: link);
+            errorCount++;
+        }
+        checkCount++;
+    }
+    
+    System.print("Found " :: checkCount :: " links on " :: page);
+    if(errorCount == 0) {
+        System.print("No broken links were found");
+    } else {
+        System.print(errorCount :: " broken links were found");
+    }
+}
+

@@ -1,0 +1,33 @@
+/**
+ * This robot contains the checkLink function that will check if a page exists
+ * at the given url.
+ *
+ * This is part of the 'Identifying Broken Links' guide on http://xill.io
+ *
+ * @author Thomas Biesaart
+ *
+ */
+use XURL, System;
+var resultCache = {};
+
+function checkLink(url) {
+    // First we check if we have the result in the cache
+    // If not then we put it in there
+    if(resultCache[url] == null) {
+       resultCache[url] = visitUrl(url);
+    }
+    
+    return resultCache[url];
+    
+}
+
+private function visitUrl(url) {
+     do {
+        var response = XURL.get(url, {"insecure": true});
+        return response.status.code == 200;
+    } fail(e) {
+        System.print("Did not load url" :: e.message);
+        
+    }
+    return false;
+}
